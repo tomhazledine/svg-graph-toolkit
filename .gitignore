@@ -1,0 +1,12 @@
+.DS_Store
+.vscode
+build/
+node_modules/
+package-lock.json
+
+# Local Netlify folder
+.netlify
+
+# esbuild analysis output
+jsssg/esbuild
+jsssg/stats.html

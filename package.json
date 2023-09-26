@@ -1,0 +1,24 @@
+{
+  "name": "app-scaffold",
+  "version": "1.0.0",
+  "main": "app.js",
+  "author": "Tom Hazledine <tom@tomhazledine.com>",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "build": "node scaffold/index.js",
+    "dev": "node scaffold/index.js --mode=development --watch --serve",
+    "serve": "node scaffold/index.js --mode=development --serve",
+    "watch": "node scaffold/index.js --mode=development --watch"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.14",
+    "cssnano": "^6.0.1",
+    "esbuild": "^0.18.6",
+    "node-static": "^0.7.11",
+    "node-watch": "^0.7.3",
+    "path": "^0.12.7",
+    "postcss": "^8.4.24",
+    "sass": "^1.63.6"
+  }
+}
