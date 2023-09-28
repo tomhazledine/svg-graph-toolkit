@@ -28,17 +28,20 @@ try {
     log(
         `  · Found ${rawValues.length} rows with ${headers.length} columns: ${headerList}`
     );
-    const values = rawValues.map(row => {
-        const [rawDate, st_lb, st_percent, kg] = row;
-        const date = parse(`${rawDate}12`, "yyyyMMddkk", new Date());
-        return {
-            date,
-            timestamp: getTime(date),
-            st_lb,
-            st_percent: parseFloat(st_percent),
-            kg: parseFloat(kg)
-        };
-    });
+    const values = rawValues
+        .map(row => {
+            const [rawDate, st_lb, st_percent, kg] = row;
+            const date = parse(`${rawDate}12`, "yyyyMMddkk", new Date());
+            return {
+                date,
+                timestamp: getTime(date),
+                st_lb,
+                st_percent: parseFloat(st_percent),
+                kg: parseFloat(kg)
+            };
+        })
+        .filter(d => d.date && d.timestamp)
+        .sort((a, b) => a.timestamp - b.timestamp);
     log(`  · Earliest date: ${parse(values[0].timestamp, "T", new Date())}`);
     log(
         `  · Latest date: ${parse(
@@ -50,7 +53,7 @@ try {
     log("· Saving data as JSON...");
     saveFile(
         path.resolve(process.cwd(), "./data/health.js"),
-        `const health = ${JSON.stringify(values)};`
+        `export const health = ${JSON.stringify(values)};`
     );
     log("Complete!", "green");
 } catch (err) {
