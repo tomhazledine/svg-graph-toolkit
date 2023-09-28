@@ -1,6 +1,7 @@
 import google from "@googleapis/sheets";
-import path, { parse } from "path";
+import path from "path";
 import { config } from "dotenv";
+import { parse } from "date-fns";
 
 import { saveFile } from "./io.js";
 import { log } from "./console.js";
@@ -29,7 +30,7 @@ try {
     const values = rawValues.map(row => {
         const [date, st_lb, st_percent, kg] = row;
         return {
-            date,
+            date: parse(`${date}12`, "yyyyMMddkk", new Date()),
             st_lb,
             st_percent: parseFloat(st_percent),
             kg: parseFloat(kg)
