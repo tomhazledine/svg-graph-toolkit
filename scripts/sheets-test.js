@@ -49,8 +49,8 @@ try {
     );
     log("· Saving data as JSON...");
     saveFile(
-        path.resolve(process.cwd(), "./build/data.json"),
-        JSON.stringify(values)
+        path.resolve(process.cwd(), "./data/health.js"),
+        `const health = ${JSON.stringify(values)};`
     );
     log("Complete!", "green");
 } catch (err) {
