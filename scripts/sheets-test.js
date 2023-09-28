@@ -1,7 +1,7 @@
 import google from "@googleapis/sheets";
 import path from "path";
 import { config } from "dotenv";
-import { parse } from "date-fns";
+import { getTime, parse } from "date-fns";
 
 import { saveFile } from "./io.js";
 import { log } from "./console.js";
@@ -24,18 +24,29 @@ try {
     log("· Parsing data...");
     const rows = response.data.values;
     const [headers, ...rawValues] = rows;
-    log(`· Found ${rawValues.length} rows with ${headers.length} columns:`);
     const headerList = headers.map(header => `"${header}"`).join(" | ");
-    log(`    ${headerList}`);
+    log(
+        `  · Found ${rawValues.length} rows with ${headers.length} columns: ${headerList}`
+    );
     const values = rawValues.map(row => {
-        const [date, st_lb, st_percent, kg] = row;
+        const [rawDate, st_lb, st_percent, kg] = row;
+        const date = parse(`${rawDate}12`, "yyyyMMddkk", new Date());
         return {
-            date: parse(`${date}12`, "yyyyMMddkk", new Date()),
+            date,
+            timestamp: getTime(date),
             st_lb,
             st_percent: parseFloat(st_percent),
             kg: parseFloat(kg)
         };
     });
+    log(`  · Earliest date: ${parse(values[0].timestamp, "T", new Date())}`);
+    log(
+        `  · Latest date: ${parse(
+            values[values.length - 1].timestamp,
+            "T",
+            new Date()
+        )}`
+    );
     log("· Saving data as JSON...");
     saveFile(
         path.resolve(process.cwd(), "./build/data.json"),
