@@ -23,7 +23,7 @@ An object defining the axes for the graph. The object should have keys for "top"
 
 Each axis is described by an Axis object with the following properties:
 
-* `type`: (enum) The type of data (`"timestamp"` or `"number"`).
+* `type`: (enum) The type of data (`"timestamp"` or `"number"`). Optional, defaults to `"number"`.
 * `ticks`: (number) The number of ticks to use.
 * `format`: (function) A function to format the ticks.
 * `scale`: The scale type to use.
@@ -48,7 +48,7 @@ The Layout object should contain:
 * `margin`: (number[]) An array containing the margins (top, right, bottom, left).
 * `graph`: An object specifying the graph's width and height, and position within the SVG (top, left, right, and bottom).
 
-## `children`
+### `children`
 
 React nodes to be rendered within the graph. These can be additional graphical elements like paths, points, etc.
 

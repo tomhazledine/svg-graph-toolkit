@@ -59,7 +59,7 @@ const GraphBase = ({ axes = {}, className = "graph", layout, children }) => {
                 .tickFormat(d =>
                     axisData.format
                         ? axisData.format(d)
-                        : axisData.type === "timestamp"
+                        : axisData?.type === "timestamp"
                         ? format(d, "do MMM yyyy")
                         : d
                 )
