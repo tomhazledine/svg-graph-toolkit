@@ -1,0 +1,19 @@
+.test-graph {
+    border: 1px solid #ccc;
+}
+
+.test-graph__background {
+    stroke: rgba(blue, 0.2);
+    stroke-width: 1px;
+    fill: none;
+}
+
+.test-graph__point {
+    fill: rgba(red, 0.3);
+}
+
+line.line {
+    stroke-width: 1px;
+    stroke-dasharray: 4;
+    stroke: rgba(0, 0, 0, 0.2);
+}
