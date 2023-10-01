@@ -4,6 +4,7 @@ import { format } from "date-fns";
 
 import GraphBase from "./graphs/GraphBase.js";
 import GraphPoints from "./graphs/GraphPoints.js";
+import GraphLine from "./graphs/GraphLine.js";
 import { parseLayout } from "./graphs/graph-utils.js";
 
 const WeightYearGraph = ({
@@ -177,8 +178,22 @@ const WeightYearGraph = ({
                 data={pointsData}
                 className={className}
                 scales={{ x: graphDetails.xScale, y: graphDetails.yScale }}
-                radius={3}
+                // radius={3}
             />
+            {lines.map(line => (
+                <GraphLine
+                    key={line.label}
+                    label={line.label}
+                    className={className}
+                    orientation={line.orientation}
+                    value={
+                        line.orientation === "horizontal"
+                            ? graphDetails.yScale(line.value)
+                            : graphDetails.xScale(line.value)
+                    }
+                    bounds={layout.graph}
+                />
+            ))}
             {/* <g className="lines">{linesMarkup}</g> */}
             {/* <g className="blocks">{blocksMarkup}</g> */}
             {/* <g className="minMaxLines">{minMaxLines}</g> */}

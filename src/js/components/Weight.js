@@ -29,7 +29,7 @@ const Weight = ({}) => {
     };
     const minMax = getMinMax(health, "kg");
 
-    const byWeight = health.sort((a, b) => a.kg - b.kg);
+    const byWeight = [...health].sort((a, b) => a.kg - b.kg);
 
     const parseAxes = (axes, bounds) =>
         Object.keys(axes).reduce((acc, key) => {
@@ -45,21 +45,34 @@ const Weight = ({}) => {
             return { ...acc, [key]: axes[key] };
         }, {});
 
+    const parseStLb = st_lb => {
+        const [st, lbRaw] = st_lb.split(" ");
+        const [lb] = lbRaw.split("/");
+        return `${st}st ${lb}lb`;
+    };
+
     const heaviest = byWeight[byWeight.length - 1];
     const lightest = byWeight[0];
+    const recent = health[health.length - 1];
 
     return (
         <div>
             <h2>Weight</h2>
             <p>I have measured my weight on {health.length} occasions.</p>
             <p>
-                My heaviest was {heaviest.kg}kg ({heaviest.st_lb}) on{" "}
+                My heaviest was {heaviest.kg}kg ({parseStLb(heaviest.st_lb)}) on{" "}
                 {format(heaviest.timestamp, "MMMM do, yyyy")}.
             </p>
             <p>
-                My lightest was {lightest.kg}kg ({lightest.st_lb}) on{" "}
+                My lightest was {lightest.kg}kg ({parseStLb(lightest.st_lb)}) on{" "}
                 {format(lightest.timestamp, "MMMM do, yyyy")}.
             </p>
+            <p>
+                My most recent measurement was {recent.kg}kg (
+                {recent.st_percent}st) on{" "}
+                {format(recent.timestamp, "MMMM do, yyyy")}.
+            </p>
+
             {dateBounds.map(({ year, start, end }) => (
                 <div key={`year_${year}`}>
                     <h3>{year}</h3>
@@ -79,6 +92,16 @@ const Weight = ({}) => {
                                 label: "All time low",
                                 orientation: "horizontal",
                                 value: minMax.min
+                            },
+                            {
+                                label: "All time lightest",
+                                orientation: "vertical",
+                                value: lightest.timestamp
+                            },
+                            {
+                                label: "All time heaviest",
+                                orientation: "vertical",
+                                value: heaviest.timestamp
                             }
                         ]}
                     />

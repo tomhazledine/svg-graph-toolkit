@@ -1,19 +1,31 @@
 .test-graph {
-    border: 1px solid #ccc;
+    // border: 1px solid #ccc;
 }
 
 .test-graph__background {
-    stroke: rgba(blue, 0.2);
-    stroke-width: 1px;
-    fill: none;
+    // stroke: rgba(blue, 0.2);
+    // stroke-width: 1px;
+    fill: rgba(black, 0.04);
 }
 
 .test-graph__point {
     fill: rgba(red, 0.3);
 }
 
-line.line {
+.test-graph__line {
     stroke-width: 1px;
     stroke-dasharray: 4;
     stroke: rgba(0, 0, 0, 0.2);
+}
+
+.test-graph__line--all-time-lightest {
+    stroke-dasharray: none;
+    stroke: rgba(seagreen, 0.5);
+    stroke-width: 2px;
+}
+
+.test-graph__line--all-time-heaviest {
+    stroke-dasharray: none;
+    stroke: rgba(red, 0.5);
+    stroke-width: 2px;
 }
