@@ -35,7 +35,7 @@ try {
             return {
                 date,
                 timestamp: getTime(date),
-                st_lb,
+                st_lb: st_lb.replace("  ", " "),
                 st_percent: parseFloat(st_percent),
                 kg: parseFloat(kg)
             };
