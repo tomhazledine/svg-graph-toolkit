@@ -7,19 +7,22 @@ import GraphPoints from "./graphs/GraphPoints.js";
 import GraphPath from "./graphs/GraphPath.js";
 import GraphLine from "./graphs/GraphLine.js";
 import GraphArea from "./graphs/GraphArea.js";
+import GraphBlock from "./graphs/GraphBlock.js";
 import { parseLayout } from "./graphs/graph-utils.js";
 
 const WeightYearGraph = ({
     data,
     axes,
     className = "test-graph",
-    blocks = { horizontal: [], vertical: [] },
-    lines = []
+    blocks = [],
+    lines = [],
+    first,
+    last
 }) => {
     const layout = parseLayout({
         width: 1000,
         height: 100,
-        margin: [6, 10, 20, 40]
+        margin: [first ? 20 : 6, 10, last ? 20 : 6, 40]
     });
 
     const parseScale = axis =>
@@ -57,63 +60,45 @@ const WeightYearGraph = ({
         y: d[axes.y.key]
     }));
 
-    // const blocksMarkup = blocks.horizontal.map(block => {
-    //     console.log({
-    //         block_min: block.min,
-    //         block_max: block.max,
-    //         min_scaled: graphDetails.yScale(block.min),
-    //         max_scaled: graphDetails.yScale(block.max),
-    //         height:
-    //             graphDetails.yScale(block.max) -
-    //             graphDetails.yScale(block.min)
-    //     });
-    //     return (
-    //         <rect
-    //             key={`block_${block.min}_${block.max}`}
-    //             x={0}
-    //             // x={0}graphDetails.xScale(block.min)}
-    //             y={graphDetails.yScale(block.max)}
-    //             width={layout.width}
-    //             height={Math.abs(
-    //                 graphDetails.yScale(block.max) -
-    //                     graphDetails.yScale(block.min)
-    //             )}
-    //             style={{ opacity: 0.1 }}
-    //             // style={{
-    //             //     fill: "none",
-    //             //     strokeTop: "1px solid red",
-    //             //     borderBottom: "1px solid green"
-    //             // }}
-    //         />
-    //     );
-    // });
+    let visibleAxes = {
+        left: {
+            scale: scales.y,
+            ticks: 4
+        }
+    };
+
+    if (first) {
+        visibleAxes = {
+            ...visibleAxes,
+            top: {
+                type: axes.x.type,
+                ticks: 12,
+                scale: scales.x,
+                format: d => format(d, "MMM")
+            }
+        };
+    }
+    if (last) {
+        visibleAxes = {
+            ...visibleAxes,
+            bottom: {
+                type: axes.x.type,
+                ticks: 12,
+                scale: scales.x,
+                format: d => format(d, "MMM")
+            }
+        };
+    }
 
     return (
-        <GraphBase
-            axes={{
-                bottom: {
-                    type: axes.x.type,
-                    ticks: 12,
-                    scale: scales.x,
-                    format: d => format(d, "MMM")
-                },
-                left: {
-                    scale: scales.y,
-                    ticks: 4
-                }
-            }}
-            className={className}
-            layout={layout}
-        >
+        <GraphBase axes={visibleAxes} className={className} layout={layout}>
             <GraphPoints
                 data={pointsData}
                 className={className}
                 scales={scales}
-                // radius={3}
             />
             <GraphArea
                 label="the area"
-                // curve
                 data={pointsData}
                 className={className}
                 scales={scales}
@@ -121,7 +106,6 @@ const WeightYearGraph = ({
             />
             <GraphPath
                 label="the line"
-                // curve
                 data={pointsData}
                 className={className}
                 scales={scales}
@@ -140,7 +124,14 @@ const WeightYearGraph = ({
                     bounds={layout.graph}
                 />
             ))}
-            {/* <g className="blocks">{blocksMarkup}</g> */}
+            {blocks.map(block => (
+                <GraphBlock
+                    key={`block_${block.label}`}
+                    className={className}
+                    scales={scales}
+                    {...block}
+                />
+            ))}
         </GraphBase>
     );
 };

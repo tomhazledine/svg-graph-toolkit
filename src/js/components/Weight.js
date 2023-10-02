@@ -73,40 +73,72 @@ const Weight = ({}) => {
                 {format(recent.timestamp, "MMMM do, yyyy")}.
             </p>
 
-            {dateBounds.map(({ year, start, end }) => (
-                <div key={`year_${year}`}>
-                    <h3>{year}</h3>
-                    <WeightYearGraph
-                        data={health.filter(
-                            d => d.timestamp < end && d.timestamp > start
-                        )}
-                        axes={parseAxes(axes, { start, end })}
-                        blocks={{ horizontal: [minMax] }}
-                        lines={[
-                            {
-                                label: "All time max",
-                                orientation: "horizontal",
-                                value: minMax.max
-                            },
-                            {
-                                label: "All time low",
-                                orientation: "horizontal",
-                                value: minMax.min
-                            },
-                            {
-                                label: "All time lightest",
-                                orientation: "vertical",
-                                value: lightest.timestamp
-                            },
-                            {
-                                label: "All time heaviest",
-                                orientation: "vertical",
-                                value: heaviest.timestamp
-                            }
-                        ]}
-                    />
-                </div>
-            ))}
+            {dateBounds.map(({ year, start, end }, i) => {
+                const yearData = health.filter(
+                    d => d.timestamp < end && d.timestamp > start
+                );
+                return (
+                    <div key={`year_${year}`}>
+                        {/* <h3>{year}</h3> */}
+                        <WeightYearGraph
+                            first={i === 0}
+                            last={i === dateBounds.length - 1}
+                            data={yearData}
+                            axes={parseAxes(axes, { start, end })}
+                            blocks={[
+                                {
+                                    label: "Future",
+                                    x0: recent.timestamp,
+                                    x1: end,
+                                    y0: 120,
+                                    y1: 100
+                                }
+                                // {
+                                //     label: "Test start fill",
+                                //     x0: start,
+                                //     x1: yearData.length
+                                //         ? yearData[0].timestamp
+                                //         : end,
+                                //     y0: 120,
+                                //     y1: 100
+                                // },
+                                // {
+                                //     label: "Test end fill",
+                                //     x0: yearData.length
+                                //         ? yearData[yearData.length - 1]
+                                //               .timestamp
+                                //         : start,
+                                //     x1: end,
+                                //     y0: 120,
+                                //     y1: 100
+                                // }
+                            ]}
+                            lines={[
+                                {
+                                    label: "All time max",
+                                    orientation: "horizontal",
+                                    value: minMax.max
+                                },
+                                {
+                                    label: "All time low",
+                                    orientation: "horizontal",
+                                    value: minMax.min
+                                },
+                                {
+                                    label: "All time lightest",
+                                    orientation: "vertical",
+                                    value: lightest.timestamp
+                                },
+                                {
+                                    label: "All time heaviest",
+                                    orientation: "vertical",
+                                    value: heaviest.timestamp
+                                }
+                            ]}
+                        />
+                    </div>
+                );
+            })}
         </div>
     );
 };
