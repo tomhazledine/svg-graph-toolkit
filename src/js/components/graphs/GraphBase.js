@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import * as d3 from "d3";
+import { axisTop, axisRight, axisBottom, axisLeft, select } from "d3";
 import { format } from "date-fns";
 
 /**
@@ -45,10 +45,10 @@ const GraphBase = ({ axes = {}, className = "graph", layout, children }) => {
     };
 
     const axesFunctions = {
-        top: d3.axisTop(),
-        right: d3.axisRight(),
-        bottom: d3.axisBottom(),
-        left: d3.axisLeft()
+        top: axisTop(),
+        right: axisRight(),
+        bottom: axisBottom(),
+        left: axisLeft()
     };
 
     useEffect(() => {
@@ -65,7 +65,7 @@ const GraphBase = ({ axes = {}, className = "graph", layout, children }) => {
                 )
                 .scale(axisData.scale);
             if (axisRefs[key].current) {
-                d3.select(axisRefs[key].current).call(axis);
+                select(axisRefs[key].current).call(axis);
             }
         });
     }, []);

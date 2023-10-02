@@ -1,5 +1,5 @@
 import React from "react";
-import * as d3 from "d3";
+import { area, curveCatmullRom } from "d3";
 
 import { slugify } from "../../utils.js";
 
@@ -11,15 +11,14 @@ const GraphArea = ({
     label = "",
     baseline = 0
 }) => {
-    const shapeGenerator = d3
-        .area()
+    const shapeGenerator = area()
         .defined(d => typeof d.y === "number")
         .x(d => scales.x(d.x))
         .y0(_ => scales.y(baseline))
         .y1(d => scales.y(d.y));
 
     if (curve) {
-        shapeGenerator.curve(d3.curveCatmullRom.alpha(0.5));
+        shapeGenerator.curve(curveCatmullRom.alpha(0.5));
     }
 
     const d = shapeGenerator(data);
