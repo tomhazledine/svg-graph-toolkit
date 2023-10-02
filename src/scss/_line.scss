@@ -18,6 +18,17 @@
     stroke: rgba(0, 0, 0, 0.2);
 }
 
+.test-graph__path {
+    stroke-width: 1px;
+    stroke: rgba(blue, 0.3);
+    fill: none;
+}
+
+.test-graph__area {
+    stroke: none;
+    fill: rgba(blue, 0.1);
+}
+
 .test-graph__line--all-time-lightest {
     stroke-dasharray: none;
     stroke: rgba(seagreen, 0.5);

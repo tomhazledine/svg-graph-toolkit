@@ -4,7 +4,9 @@ import { format } from "date-fns";
 
 import GraphBase from "./graphs/GraphBase.js";
 import GraphPoints from "./graphs/GraphPoints.js";
+import GraphPath from "./graphs/GraphPath.js";
 import GraphLine from "./graphs/GraphLine.js";
+import GraphArea from "./graphs/GraphArea.js";
 import { parseLayout } from "./graphs/graph-utils.js";
 
 const WeightYearGraph = ({
@@ -33,74 +35,27 @@ const WeightYearGraph = ({
         return [min, max];
     };
 
-    // const buildLine = ({
-    //     label = "",
-    //     className = "line",
-    //     orientation = "horizontal",
-    //     value,
-    //     bounds
-    // }) => {
-    //     const data =
-    //         orientation === "horizontal"
-    //             ? [0, value, bounds.x, value]
-    //             : [value, 0, value, bounds.y];
-
-    //     return (
-    //         <line
-    //             key={`line_${slugify(label)}`}
-    //             className={className}
-    //             x1={data[0]}
-    //             y1={data[1]}
-    //             x2={data[2]}
-    //             y2={data[3]}
-    //         />
-    //     );
-    // };
-
-    const graphDetails = {
-        xScale: parseScale(axes.x)
+    const scales = {
+        x: parseScale(axes.x)
             .range([layout.graph.left, layout.graph.right])
             .domain(
                 axes.x.scale
                     ? [axes.x.scale.min, axes.x.scale.max]
                     : parseDomain(axes.x, data)
             ),
-        yScale: parseScale(axes.y)
+        y: parseScale(axes.y)
             .range([layout.graph.bottom, layout.graph.top])
             .domain(
                 axes.y.scale
                     ? [axes.y.scale.min, axes.y.scale.max]
                     : parseDomain(axes.y, data)
-            ),
-        lineGenerator: d3.line().defined(d => typeof d.y === "number"),
-        shapeGenerator: d3.area().defined(d => typeof d.y === "number")
+            )
     };
-
-    graphDetails.lineGenerator.x(d => graphDetails.xScale(d.x));
-    graphDetails.lineGenerator.y(d => graphDetails.yScale(d.y));
-    // graphDetails.lineGenerator.curve(d3.curveCatmullRom.alpha(0.5));
-
-    // graphDetails.shapeGenerator.x(d => graphDetails.xScale(d.x));
-    // graphDetails.shapeGenerator.y0(_ => graphDetails.yScale(0));
-    // graphDetails.shapeGenerator.y1(d => graphDetails.yScale(d.y));
-    // graphDetails.shapeGenerator.curve(d3.curveCatmullRom.alpha(0.5));
 
     const pointsData = data.map(d => ({
         x: d[axes.x.key],
         y: d[axes.y.key]
     }));
-
-    // const linesMarkup = [parsedData].map(set => {
-    //     const path = graphDetails.lineGenerator(set);
-    //     return (
-    //         <path
-    //             className={`line`}
-    //             style={{ fill: "none", stroke: "red", strokeWidth: "1px" }}
-    //             key={`graph-line`}
-    //             d={path}
-    //         />
-    //     );
-    // });
 
     // const blocksMarkup = blocks.horizontal.map(block => {
     //     console.log({
@@ -132,30 +87,6 @@ const WeightYearGraph = ({
     //         />
     //     );
     // });
-    // let areas = parsedData.map((d, key) => {
-    //     const shape = graphDetails.shapeGenerator(d);
-    //     const selected = d[0].active ? "selected" : "";
-    //     if (d[0].slug === "happiness") return;
-    //     return (
-    //         <path
-    //             d={shape}
-    //             key={`graph-area-${d[0].slug}`}
-    //             className={`chartarea area_${d[0].slug} ${selected}`}
-    //         />
-    //     );
-    // });
-
-    // const minMaxLines = lines.map(line => {
-    //     const value =
-    //         line.orientation === "horizontal"
-    //             ? graphDetails.yScale(line.value)
-    //             : graphDetails.xScale(line.value);
-    //     return buildLine({
-    //         ...line,
-    //         value,
-    //         bounds: { x: layout.width, y: layout.height }
-    //     });
-    // });
 
     return (
         <GraphBase
@@ -163,11 +94,11 @@ const WeightYearGraph = ({
                 bottom: {
                     type: axes.x.type,
                     ticks: 12,
-                    scale: graphDetails.xScale,
+                    scale: scales.x,
                     format: d => format(d, "MMM")
                 },
                 left: {
-                    scale: graphDetails.yScale,
+                    scale: scales.y,
                     ticks: 4
                 }
             }}
@@ -177,8 +108,23 @@ const WeightYearGraph = ({
             <GraphPoints
                 data={pointsData}
                 className={className}
-                scales={{ x: graphDetails.xScale, y: graphDetails.yScale }}
+                scales={scales}
                 // radius={3}
+            />
+            <GraphArea
+                label="the area"
+                // curve
+                data={pointsData}
+                className={className}
+                scales={scales}
+                baseline={100}
+            />
+            <GraphPath
+                label="the line"
+                // curve
+                data={pointsData}
+                className={className}
+                scales={scales}
             />
             {lines.map(line => (
                 <GraphLine
@@ -188,16 +134,13 @@ const WeightYearGraph = ({
                     orientation={line.orientation}
                     value={
                         line.orientation === "horizontal"
-                            ? graphDetails.yScale(line.value)
-                            : graphDetails.xScale(line.value)
+                            ? scales.y(line.value)
+                            : scales.x(line.value)
                     }
                     bounds={layout.graph}
                 />
             ))}
-            {/* <g className="lines">{linesMarkup}</g> */}
             {/* <g className="blocks">{blocksMarkup}</g> */}
-            {/* <g className="minMaxLines">{minMaxLines}</g> */}
-            {/* <g className="areas">{areas}</g> */}
         </GraphBase>
     );
 };
