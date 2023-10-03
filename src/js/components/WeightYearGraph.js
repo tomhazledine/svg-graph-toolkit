@@ -8,6 +8,7 @@ import GraphPath from "./graphs/GraphPath.js";
 import GraphLine from "./graphs/GraphLine.js";
 import GraphArea from "./graphs/GraphArea.js";
 import GraphBlock from "./graphs/GraphBlock.js";
+import GraphHoverTargets from "./graphs/GraphHoverTargets.js";
 import { parseLayout } from "./graphs/graph-utils.js";
 
 const WeightYearGraph = ({
@@ -132,6 +133,13 @@ const WeightYearGraph = ({
                     {...block}
                 />
             ))}
+            <GraphHoverTargets
+                className={className}
+                data={pointsData}
+                layout={layout}
+                scales={scales}
+                callback={() => console.log("hover callback")}
+            />
         </GraphBase>
     );
 };

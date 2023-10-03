@@ -34,6 +34,16 @@
     fill: rgba(black, 0.1);
 }
 
+.test-graph__hover-target {
+    stroke-width: 1px;
+    stroke: rgba(black, 0.05);
+    fill: none;
+    cursor: pointer;
+    &:hover {
+        fill: rgba(yellow, 0.8);
+    }
+}
+
 .test-graph__line--all-time-lightest {
     stroke-dasharray: none;
     stroke: rgba(seagreen, 0.5);
