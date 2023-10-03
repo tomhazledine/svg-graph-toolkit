@@ -1,45 +1,48 @@
 import React from "react";
-import { area, curveCatmullRom } from "d3";
 import { Delaunay } from "d3-delaunay";
 
 import { slugify } from "../../utils.js";
 
 const HoverTargets = ({
-    data,
+    dataSets, // An array of data lists, each of which is an array of objects with `x`, `y`, and `slug` keys
     className = "test-graph",
     scales,
     label = "",
-    layout
+    layout,
+    onClick,
+    onMouseOver
 }) => {
-    const delaunay =
-        data.length > 0
-            ? Delaunay.from(data.map(d => [scales.x(d.x), scales.y(d.y)]))
-            : false;
+    if (dataSets.length < 1 || dataSets[0].length < 1) {
+        return null;
+    }
 
-    const voronoi = delaunay
-        ? delaunay.voronoi([
-              layout.graph.left,
-              layout.graph.top,
-              layout.graph.right,
-              layout.graph.bottom
-          ])
-        : false;
+    const data = dataSets.flat();
+    const delaunay = Delaunay.from(
+        data.map(d => [scales.x(d.x), scales.y(d.y)])
+    );
 
-    const shapes = delaunay
-        ? data.map((d, i) => {
-              const path = voronoi.renderCell(i);
-              return (
-                  <path
-                      key={`hover-target-${i}`}
-                      className={`${className}__hover-target ${className}__hover-target--${slugify(
-                          label
-                      )}`}
-                      pointerEvents="all"
-                      d={path}
-                  />
-              );
-          })
-        : [];
+    const voronoi = delaunay.voronoi([
+        layout.graph.left,
+        layout.graph.top,
+        layout.graph.right,
+        layout.graph.bottom
+    ]);
+
+    const shapes = data.map((d, i) => {
+        const path = voronoi.renderCell(i);
+        return (
+            <path
+                key={`hover-target-${i}`}
+                className={`${className}__hover-target ${className}__hover-target--${slugify(
+                    label
+                )}`}
+                pointerEvents="all"
+                d={path}
+                onClick={e => onClick(e, d)}
+                onMouseOver={e => onMouseOver(e, d)}
+            />
+        );
+    });
 
     return (
         <g
@@ -47,7 +50,7 @@ const HoverTargets = ({
                 label
             )}`}
         >
-            {delaunay && shapes}
+            {shapes}
         </g>
     );
 };

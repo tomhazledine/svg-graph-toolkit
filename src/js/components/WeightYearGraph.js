@@ -58,7 +58,8 @@ const WeightYearGraph = ({
 
     const pointsData = data.map(d => ({
         x: d[axes.x.key],
-        y: d[axes.y.key]
+        y: d[axes.y.key],
+        slug: "weight"
     }));
 
     let visibleAxes = {
@@ -135,10 +136,11 @@ const WeightYearGraph = ({
             ))}
             <GraphHoverTargets
                 className={className}
-                data={pointsData}
+                dataSets={[pointsData]}
                 layout={layout}
                 scales={scales}
-                callback={() => console.log("hover callback")}
+                onClick={(e, d) => console.log("click callback", d)}
+                onMouseOver={(e, d) => console.log("hover callback", d)}
             />
         </GraphBase>
     );
