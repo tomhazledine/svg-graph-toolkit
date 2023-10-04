@@ -1,5 +1,4 @@
 import fs from "fs";
-import path from "path";
 import { config } from "./index.js";
 
 const checkDir = targetPath => {
@@ -32,39 +31,4 @@ export const readFolder = (startPath, ignorePath = false) => {
         .flat(Infinity)
         .filter(path => !path.includes(ignorePath));
     return flattenedPaths;
-};
-
-export const readFile = path => {
-    try {
-        const data = fs.readFileSync(path, "utf8");
-        return data;
-    } catch (err) {
-        throw err;
-    }
-};
-
-const ensureDirectoryExistence = filePath => {
-    const dirname = path.dirname(filePath);
-    if (checkDir(dirname).exists) {
-        return true;
-    }
-    if (config.verbose) console.log(`Creating folder ${dirname}`);
-    fs.mkdirSync(dirname, { recursive: true });
-    return true;
-};
-
-export const saveFile = (filePath, data) => {
-    const targetExists = ensureDirectoryExistence(filePath);
-    if (targetExists) {
-        fs.writeFileSync(filePath, data, "utf8");
-    }
-};
-
-export const copyFile = (originalFilePath, newFilePath) => {
-    const targetExists = ensureDirectoryExistence(newFilePath);
-    if (targetExists) {
-        fs.copyFile(originalFilePath, newFilePath, err => {
-            if (err) throw err;
-        });
-    }
 };

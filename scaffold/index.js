@@ -1,4 +1,4 @@
-import { config as rawConfig } from "../app.config.js";
+import { config as rawConfig } from "./app.config.js";
 import { exit } from "./server.js";
 import { parseArgs, parseConfig } from "./utils.js";
 import { build } from "./build.js";
@@ -13,8 +13,10 @@ const esbuildConfig = {
     entryNames: plainConfig.appName,
     bundle: true,
     outdir: `build`,
+    platform: "node",
     loader: { ".js": "jsx" },
-    sourcemap: args.mode === "development"
+    sourcemap: args.mode === "development",
+    external: ["react", "react-dom"]
 };
 
 export const config = { ...plainConfig, esbuildConfig };

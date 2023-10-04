@@ -1,5 +1,6 @@
 export const config = {
-    appName: "graph-helpers",
+    appName: "svg-graph-toolkit",
     entryPoints: ["src/js/index.js"],
+    external: ["react", "react-dom"],
     out: "build"
 };

@@ -4,27 +4,23 @@
     "main": "build/graph-helpers.js",
     "author": "Tom Hazledine <tom@tomhazledine.com>",
     "license": "MIT",
-    "type": "module",
     "scripts": {
         "build": "node scaffold/index.js",
         "dev": "node scaffold/index.js --mode=development"
     },
     "devDependencies": {
-        "autoprefixer": "^10.4.14",
-        "cssnano": "^6.0.1",
-        "dotenv": "^16.3.1",
         "esbuild": "^0.18.6",
         "node-static": "^0.7.11",
         "node-watch": "^0.7.3",
-        "path": "^0.12.7",
-        "postcss": "^8.4.24",
-        "sass": "^1.63.6"
+        "path": "^0.12.7"
+    },
+    "peerDependencies": {
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0"
     },
     "dependencies": {
         "d3": "^7.8.5",
         "d3-delaunay": "^6.0.4",
-        "date-fns": "^2.30.0",
-        "react": "^18.2.0",
-        "react-dom": "^18.2.0"
+        "date-fns": "^2.30.0"
     }
 }
