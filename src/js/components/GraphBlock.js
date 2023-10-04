@@ -1,6 +1,6 @@
 import React from "react";
 
-import { slugify } from "../../utils/general.js";
+import { slugify } from "../utils/general.js";
 
 const GraphBlock = ({
     className = "test-graph",

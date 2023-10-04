@@ -1,7 +1,7 @@
 import React from "react";
 import { line, curveCatmullRom } from "d3";
 
-import { slugify } from "../../utils/general.js";
+import { slugify } from "../utils/general.js";
 
 const GraphPath = ({
     data,
