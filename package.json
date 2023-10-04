@@ -1,12 +1,13 @@
 {
-    "name": "@tomhazledine/graph-helpers",
-    "version": "1.0.0",
-    "main": "build/graph-helpers.js",
+    "name": "@tomhazledine/svg-graph-toolkit",
+    "version": "0.1.0",
+    "main": "build/svg-graph-toolkit.js",
     "author": "Tom Hazledine <tom@tomhazledine.com>",
     "license": "MIT",
     "scripts": {
         "build": "node scaffold/index.js",
-        "dev": "node scaffold/index.js --mode=development"
+        "dev": "node scaffold/index.js --mode=development",
+        "prepublish": "npm run build"
     },
     "devDependencies": {
         "esbuild": "^0.18.6",
