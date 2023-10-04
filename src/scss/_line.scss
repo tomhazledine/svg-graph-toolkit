@@ -9,12 +9,25 @@
 }
 
 .test-graph__point {
-    fill: rgba(red, 0.3);
+    r: 2px;
+    fill: rgba(black, 0.4);
+}
+.test-graph__point--active {
+    // stroke: blue;
+    // stroke-width: 6px;
+    r: 3px;
+    fill: red;
 }
 
 .test-graph__line {
     stroke-width: 1px;
     stroke-dasharray: 4;
+    stroke: rgba(0, 0, 0, 0.2);
+}
+.test-graph__line--active-x,
+.test-graph__line--active-y {
+    stroke-width: 1px;
+    stroke-dasharray: none;
     stroke: rgba(0, 0, 0, 0.2);
 }
 
@@ -26,7 +39,7 @@
 
 .test-graph__area {
     stroke: none;
-    fill: rgba(blue, 0.1);
+    fill: rgba(blue, 0.05);
 }
 
 .test-graph__block {
@@ -35,13 +48,11 @@
 }
 
 .test-graph__hover-target {
-    stroke-width: 1px;
-    stroke: rgba(black, 0.05);
+    stroke: none;
     fill: none;
-    cursor: pointer;
-    &:hover {
-        fill: rgba(yellow, 0.8);
-    }
+    // cursor: pointer;
+}
+.test-graph__label {
 }
 
 .test-graph__line--all-time-lightest {

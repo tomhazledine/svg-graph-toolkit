@@ -13,12 +13,17 @@ const Weight = ({}) => {
         { year: 2022, start: 1640995200000, end: 1672531200000 },
         { year: 2023, start: 1672531200000, end: 1704067200000 }
     ];
+    const kgBounds = [100, 120];
     const axes = {
         x: {
             key: "timestamp",
             type: "timestamp"
         },
-        y: { key: "kg", type: "number", scale: { min: 100, max: 120 } }
+        y: {
+            key: "kg",
+            type: "number",
+            scale: { min: kgBounds[0], max: kgBounds[1] }
+        }
     };
     const getMinMax = (data, key) => {
         const values = data
@@ -90,8 +95,8 @@ const Weight = ({}) => {
                                     label: "Future",
                                     x0: recent.timestamp,
                                     x1: end,
-                                    y0: 120,
-                                    y1: 100
+                                    y0: kgBounds[1],
+                                    y1: kgBounds[0]
                                 }
                                 // {
                                 //     label: "Test start fill",

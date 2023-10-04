@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import * as d3 from "d3";
 import { format } from "date-fns";
 
@@ -8,6 +8,7 @@ import GraphPath from "./graphs/GraphPath.js";
 import GraphLine from "./graphs/GraphLine.js";
 import GraphArea from "./graphs/GraphArea.js";
 import GraphBlock from "./graphs/GraphBlock.js";
+import GraphLabel from "./graphs/GraphLabel.js";
 import GraphHoverTargets from "./graphs/GraphHoverTargets.js";
 import { parseLayout } from "./graphs/graph-utils.js";
 
@@ -20,6 +21,7 @@ const WeightYearGraph = ({
     first,
     last
 }) => {
+    const [activePoint, setActivePoint] = useState(null);
     const layout = parseLayout({
         width: 1000,
         height: 100,
@@ -92,13 +94,20 @@ const WeightYearGraph = ({
         };
     }
 
+    const handleHover = (e, d) => {
+        setActivePoint(d);
+    };
+    const handleMouseOut = () => {
+        setActivePoint(null);
+    };
+
     return (
-        <GraphBase axes={visibleAxes} className={className} layout={layout}>
-            <GraphPoints
-                data={pointsData}
-                className={className}
-                scales={scales}
-            />
+        <GraphBase
+            axes={visibleAxes}
+            className={className}
+            layout={layout}
+            onMouseOut={handleMouseOut}
+        >
             <GraphArea
                 label="the area"
                 data={pointsData}
@@ -134,14 +143,48 @@ const WeightYearGraph = ({
                     {...block}
                 />
             ))}
+
+            <GraphPoints
+                data={pointsData}
+                className={className}
+                scales={scales}
+                activePoints={[activePoint]}
+            />
             <GraphHoverTargets
                 className={className}
                 dataSets={[pointsData]}
                 layout={layout}
                 scales={scales}
-                onClick={(e, d) => console.log("click callback", d)}
-                onMouseOver={(e, d) => console.log("hover callback", d)}
+                // onClick={(e, d) => console.log("click callback", d)}
+                onMouseOver={handleHover}
             />
+            {activePoint && (
+                <>
+                    <GraphLine
+                        label="active x"
+                        className={className}
+                        orientation="vertical"
+                        value={scales.x(activePoint.x)}
+                        bounds={layout.graph}
+                    />
+                    <GraphLine
+                        label="active y"
+                        className={className}
+                        orientation="horizontal"
+                        value={scales.y(activePoint.y)}
+                        bounds={layout.graph}
+                    />
+                    <GraphLabel
+                        className={className}
+                        text={`${activePoint.y} kg`}
+                        layout={layout}
+                        position={{
+                            x: scales.x(activePoint.x),
+                            y: scales.y(activePoint.y)
+                        }}
+                    />
+                </>
+            )}
         </GraphBase>
     );
 };
