@@ -1,13 +1,13 @@
 {
     "name": "@tomhazledine/graph-helpers",
     "version": "1.0.0",
-    "main": "app.js",
+    "main": "build/graph-helpers.js",
     "author": "Tom Hazledine <tom@tomhazledine.com>",
     "license": "MIT",
     "type": "module",
     "scripts": {
         "build": "node scaffold/index.js",
-        "dev": "node scaffold/index.js --mode=development --watch"
+        "dev": "node scaffold/index.js --mode=development"
     },
     "devDependencies": {
         "autoprefixer": "^10.4.14",
