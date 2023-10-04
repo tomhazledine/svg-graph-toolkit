@@ -1,9 +1,11 @@
 import React from "react";
 
 import { slugify } from "../../utils.js";
+import GraphPoint from "./GraphPoint.js";
 
 /**
  * @typedef {Object} DataPoint
+ * @property {string} slug - The identification slug for the dataset
  * @property {number} x - The x-coordinate value
  * @property {number} y - The y-coordinate value
  */
@@ -14,9 +16,9 @@ import { slugify } from "../../utils.js";
  *
  * @example
  * const sampleData = [
- *   { x: 0, y: 1 },
- *   { x: 1, y: 2 },
- *   { x: 2, y: 3 }
+ *   { slug: "foo", x: 0, y: 1 },
+ *   { slug: "foo", x: 1, y: 2 },
+ *   { slug: "foo", x: 2, y: 3 }
  * ];
  */
 
@@ -25,21 +27,26 @@ const GraphPoints = ({
     className = "graph",
     scales,
     label = "Graph points",
-    radius = 2
+    radius = 2,
+    activePoints = []
 }) => {
-    const slug = slugify(label);
+    const groupSlug = slugify(label);
     const circlesMarkup = data.map((d, i) => (
-        <circle
-            key={`${slug}_point_${i}`}
-            className={`${className}__point`}
-            r={`${radius}px`}
-            cx={scales.x(d.x)}
-            cy={scales.y(d.y)}
+        <GraphPoint
+            key={`${groupSlug}_point_${i}`}
+            d={d}
+            className={className}
+            scales={scales}
+            activePoints={activePoints}
+            groupSlug={groupSlug}
+            radius={radius}
         />
     ));
 
     return (
-        <g className={`${className}__points ${className}__points--${slug}`}>
+        <g
+            className={`${className}__points ${className}__points--${groupSlug}`}
+        >
             {circlesMarkup}
         </g>
     );

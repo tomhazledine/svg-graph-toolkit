@@ -9,8 +9,8 @@ const HoverTargets = ({
     scales,
     label = "",
     layout,
-    onClick,
-    onMouseOver
+    onClick = () => {},
+    onMouseOver = () => {}
 }) => {
     if (dataSets.length < 1 || dataSets[0].length < 1) {
         return null;

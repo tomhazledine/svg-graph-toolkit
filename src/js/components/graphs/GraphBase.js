@@ -29,8 +29,15 @@ import { format } from "date-fns";
  * @param {string} className - The class name to use for the graph. This will be prepended to the auto-generated class names for internal elements (background, axes, etc.).
  * @param {Layout} layout - The layout to use.
  * @param {React.ReactNode} children - The children to render (paths, points, etc.)
+ * @param {Object} props - Any other props to pass to the SVG element.
  */
-const GraphBase = ({ axes = {}, className = "graph", layout, children }) => {
+const GraphBase = ({
+    axes = {},
+    className = "graph",
+    layout,
+    children,
+    ...props
+}) => {
     const axisRefs = {
         top: useRef(),
         right: useRef(),
@@ -75,6 +82,7 @@ const GraphBase = ({ axes = {}, className = "graph", layout, children }) => {
             className={className}
             viewBox={`0 0 ${layout.width} ${layout.height}`}
             preserveAspectRatio="none"
+            {...props}
         >
             <rect
                 className={`${className}__background`}
