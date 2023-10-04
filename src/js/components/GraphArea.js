@@ -1,7 +1,7 @@
 import React from "react";
 import { area, curveCatmullRom } from "d3";
 
-import { slugify } from "../../utils.js";
+import { slugify } from "../../utils/general.js";
 
 const GraphArea = ({
     data,

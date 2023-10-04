@@ -1,8 +1,6 @@
 export const config = {
-    appName: "app-scaffold",
-    entryPoints: ["src/js/app.js"],
-    styles: "src/scss",
-    port: 1337,
+    appName: "graph-helpers",
+    entryPoints: ["src/js/index.js"],
     out: "build",
     public: "src/public"
 };

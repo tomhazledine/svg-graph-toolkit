@@ -1,28 +1,10 @@
-# Basic App Scaffold
+# Graph Helpers
 
-## Features
+This is a set of helper functions and React components that I commonly use when generating SVG graphs in my projects. I like to hand-roll SVG graphs with JSX, but there are inevitably certain things that I need to do over and over again. I've created this library to DRY out my graphing projects and avoid re-work.
 
-* JS compilation (esbuild)
-* CSS compilation with (scss, postcss, autoprefixer, cssnano)
-* Copy public (a.k.a. static) files to build dir alongside JS and CSS assets
-* Local server for development
+## Components
 
-## Setup
+* [GraphBase](./docs/GraphBase.md)
 
-Ins and Outs definied in `/app.config.js`:
+## Helpers
 
-```js
-export const config = {
-    appName: "rss-reader",
-    entryPoints: ["src/js/app.js"],
-    styles: "src/scss",
-    port: 1337,
-    out: "build",
-    public: "src/public"
-};
-```
-
-## Scripts
-
-* `yarn dev` fires up local server and watches for changes
-* `yarn build` creates a production build

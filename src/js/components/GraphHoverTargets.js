@@ -1,7 +1,7 @@
 import React from "react";
 import { Delaunay } from "d3-delaunay";
 
-import { slugify } from "../../utils.js";
+import { slugify } from "../../utils/general.js";
 
 const HoverTargets = ({
     dataSets, // An array of data lists, each of which is an array of objects with `x`, `y`, and `slug` keys
