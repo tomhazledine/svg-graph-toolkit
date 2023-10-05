@@ -1,3 +1,5 @@
+import { scaleLinear, scaleTime } from "d3-scale";
+
 export const getLayout = ({
     width = 960,
     height = 400,
@@ -17,7 +19,7 @@ export const getLayout = ({
 };
 
 const parseScale = axis =>
-    axis.type === "timestamp" ? d3.scaleTime() : d3.scaleLinear();
+    axis.type === "timestamp" ? scaleTime() : scaleLinear();
 
 const parseDomain = (axis, data) => {
     const axisData = data
