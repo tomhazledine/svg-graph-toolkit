@@ -26,14 +26,16 @@ import { format } from "date-fns";
  * This provides the base for all graphs, including axes and a background.
  *
  * @param {Object} axes - The axes to use. Expects keys of "top", "right", "bottom", and "left". An axis object is defined above.
- * @param {string} className - The class name to use for the graph. This will be prepended to the auto-generated class names for internal elements (background, axes, etc.).
+ * @param {string} classPrefix - This will be prepended to the auto-generated class names for internal elements (background, axes, etc.).
+ * @param {string} className - This class name will be added as-is to the SVG element.
  * @param {Layout} layout - The layout to use.
  * @param {React.ReactNode} children - The children to render (paths, points, etc.)
  * @param {Object} props - Any other props to pass to the SVG element.
  */
 const GraphBase = ({
     axes = {},
-    className = "graph",
+    classPrefix = "graph",
+    className = "",
     layout,
     children,
     ...props
@@ -79,13 +81,13 @@ const GraphBase = ({
 
     return (
         <svg
-            className={className}
+            className={`${classPrefix} ${className}`}
             viewBox={`0 0 ${layout.width} ${layout.height}`}
             preserveAspectRatio="none"
             {...props}
         >
             <rect
-                className={`${className}__background`}
+                className={`${classPrefix}__background`}
                 x={layout.graph.left}
                 y={layout.graph.top}
                 width={layout.graph.width}
@@ -96,7 +98,7 @@ const GraphBase = ({
                     key={`axis_${key}`}
                     ref={axisRefs[key]}
                     transform={axisTransforms[key]}
-                    className={`${className}__axis ${className}__axis--${key}`}
+                    className={`${classPrefix}__axis ${classPrefix}__axis--${key}`}
                 />
             ))}
             {children}

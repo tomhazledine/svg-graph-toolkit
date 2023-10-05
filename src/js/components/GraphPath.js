@@ -5,7 +5,8 @@ import { slugify } from "../utils/general.js";
 
 const GraphPath = ({
     data,
-    className = "test-graph",
+    classPrefix = "graph",
+    className = "",
     scales,
     curve = false,
     label = ""
@@ -23,9 +24,11 @@ const GraphPath = ({
 
     return (
         <path
-            className={`${className}__path ${className}__path--${slugify(
-                label
-            )}`}
+            className={`
+                ${classPrefix}__path
+                ${classPrefix}__path--${slugify(label)}
+                ${className}
+            `}
             d={d}
         />
     );

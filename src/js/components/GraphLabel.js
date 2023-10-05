@@ -1,6 +1,13 @@
 import React from "react";
 
-const GraphLabel = ({ className, text, position, layout, buffer = 20 }) => {
+const GraphLabel = ({
+    classPrefix = "graph",
+    className = "",
+    text,
+    position,
+    layout,
+    buffer = 20
+}) => {
     const orientation = {
         y: position.y > layout.graph.top + buffer ? "top" : "bottom",
         x:
@@ -12,7 +19,7 @@ const GraphLabel = ({ className, text, position, layout, buffer = 20 }) => {
     };
     return (
         <text
-            className={`${className}__label`}
+            className={`${classPrefix}__label ${className}`}
             x={position.x}
             y={position.y}
             pointerEvents="none"

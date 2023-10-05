@@ -5,7 +5,8 @@ import { slugify } from "../utils/general.js";
 
 const HoverTargets = ({
     dataSets, // An array of data lists, each of which is an array of objects with `x`, `y`, and `slug` keys
-    className = "test-graph",
+    classPrefix = "graph",
+    className = "",
     scales,
     label = "",
     layout,
@@ -33,9 +34,10 @@ const HoverTargets = ({
         return (
             <path
                 key={`hover-target-${i}`}
-                className={`${className}__hover-target ${className}__hover-target--${slugify(
-                    label
-                )}`}
+                className={`
+                    ${classPrefix}__hover-target
+                    ${classPrefix}__hover-target--${slugify(label)}
+                `}
                 pointerEvents="all"
                 d={path}
                 onClick={e => onClick(e, d)}
@@ -46,9 +48,11 @@ const HoverTargets = ({
 
     return (
         <g
-            className={`${className}__hover-targets ${className}__hover-targets--${slugify(
-                label
-            )}`}
+            className={`
+                ${classPrefix}__hover-targets
+                ${classPrefix}__hover-targets--${slugify(label)}
+                ${className}
+            `}
         >
             {shapes}
         </g>

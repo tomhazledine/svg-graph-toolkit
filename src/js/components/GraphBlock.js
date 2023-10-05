@@ -3,7 +3,8 @@ import React from "react";
 import { slugify } from "../utils/general.js";
 
 const GraphBlock = ({
-    className = "test-graph",
+    classPrefix = "graph",
+    className = "",
     scales,
     x0,
     x1,
@@ -12,7 +13,9 @@ const GraphBlock = ({
     label = ""
 }) => (
     <rect
-        className={`${className}__block ${className}__block--${slugify(label)}`}
+        className={`${classPrefix}__block ${classPrefix}__block--${slugify(
+            label
+        )} ${className}}`}
         x={scales.x(x0)}
         y={scales.y(y0)}
         width={Math.abs(scales.x(x1) - scales.x(x0))}

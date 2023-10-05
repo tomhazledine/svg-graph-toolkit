@@ -15,7 +15,8 @@ import React, { useEffect, useState } from "react";
  * @param {DataPoint} d - The data point to render
  * @param {DataPoint[]} activePoints - An array of "active" points
  * @param {string} groupSlug - The slug of the group
- * @param {string} className - The class name to use
+ * @param {string} classPrefix - Prepended to all auto-generated class names
+ * @param {string} className - A class name to be added directly to the element
  * @param {Object} scales - The scales to use
  * @param {number} radius - The radius for the final circle
  * @returns {React.ReactNode} - The rendered circle
@@ -24,7 +25,8 @@ const GraphPoint = ({
     d,
     activePoints,
     groupSlug,
-    className,
+    classPrefix = "graph",
+    className = "",
     scales,
     radius
 }) => {
@@ -41,9 +43,12 @@ const GraphPoint = ({
 
     return (
         <circle
-            className={`${className}__point ${className}__point--${groupSlug} ${
-                active ? `${className}__point--active` : ""
-            }`}
+            className={`
+                ${classPrefix}__point
+                ${classPrefix}__point--${groupSlug}
+                ${active ? `${classPrefix}__point--active` : ""}
+                ${className}
+            `}
             r={`${radius}px`}
             cx={scales.x(d.x)}
             cy={scales.y(d.y)}

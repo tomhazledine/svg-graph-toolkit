@@ -4,7 +4,8 @@ import { slugify } from "../utils/general.js";
 
 const GraphLine = ({
     label = "",
-    className = "line",
+    classPrefix = "graph",
+    className = "",
     orientation = "horizontal",
     value,
     bounds
@@ -16,9 +17,11 @@ const GraphLine = ({
 
     return (
         <line
-            className={`${className}__line ${className}__line--${slugify(
-                label
-            )}`}
+            className={`
+                ${classPrefix}__line
+                ${classPrefix}__line--${slugify(label)}
+                ${className}
+            `}
             x1={data[0]}
             y1={data[1]}
             x2={data[2]}

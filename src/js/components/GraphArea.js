@@ -5,7 +5,8 @@ import { slugify } from "../utils/general.js";
 
 const GraphArea = ({
     data,
-    className = "test-graph",
+    classPrefix = "graph",
+    className = "",
     scales,
     curve = false,
     label = "",
@@ -25,9 +26,9 @@ const GraphArea = ({
 
     return (
         <path
-            className={`${className}__area ${className}__area--${slugify(
+            className={`${classPrefix}__area ${classPrefix}__area--${slugify(
                 label
-            )}`}
+            )} ${className}`}
             d={d}
         />
     );

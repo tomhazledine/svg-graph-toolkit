@@ -24,7 +24,8 @@ import GraphPoint from "./GraphPoint.js";
 
 const GraphPoints = ({
     data,
-    className = "graph",
+    classPrefix = "graph",
+    className = "",
     scales,
     label = "Graph points",
     radius = 2,
@@ -35,7 +36,7 @@ const GraphPoints = ({
         <GraphPoint
             key={`${groupSlug}_point_${i}`}
             d={d}
-            className={className}
+            classPrefix={classPrefix}
             scales={scales}
             activePoints={activePoints}
             groupSlug={groupSlug}
@@ -45,7 +46,11 @@ const GraphPoints = ({
 
     return (
         <g
-            className={`${className}__points ${className}__points--${groupSlug}`}
+            className={`
+                ${classPrefix}__points
+                ${classPrefix}__points--${groupSlug}
+                ${className}
+            `}
         >
             {circlesMarkup}
         </g>
