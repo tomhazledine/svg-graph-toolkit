@@ -1,6 +1,6 @@
 {
     "name": "@tomhazledine/svg-graph-toolkit",
-    "version": "0.3.0",
+    "version": "0.3.1",
     "main": "build/svg-graph-toolkit.js",
     "author": "Tom Hazledine <tom@tomhazledine.com>",
     "license": "MIT",
