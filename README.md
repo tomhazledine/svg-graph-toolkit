@@ -4,7 +4,17 @@ This is a set of helper functions and React components that I commonly use when 
 
 ## Components
 
-* [GraphBase](./docs/GraphBase.md)
+* [`<GraphBase />`](./docs/GraphBase.md)
+* `<GraphArea />`
+* `<GraphBlock />`
+* `<GraphHoverTargets />`
+* `<GraphLabel />`
+* `<GraphLine />`
+* `<GraphPath />`
+* `<GraphPoint />`
+* `<GraphPoints />`
 
 ## Helpers
 
+* `getLayout()`
+* `getScales()`
