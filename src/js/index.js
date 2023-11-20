@@ -9,4 +9,4 @@ export { default as GraphPoint } from "./components/GraphPoint.js";
 export { default as GraphPoints } from "./components/GraphPoints.js";
 
 export * from "./utils/general.js";
-export * from "./utils/graph-utils.js";
+export * from "./utils/index.js";
