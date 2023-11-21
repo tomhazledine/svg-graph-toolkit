@@ -48,5 +48,3 @@ const MyGraph = () => {
     );
 };
 ```
-
-This function is particularly useful for setting up the initial dimensions and margins of your graph, ensuring consistency and readability across different screen sizes and data sets.

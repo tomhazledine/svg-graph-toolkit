@@ -14,56 +14,94 @@ import { GraphArea } from "@tomhazledine/svg-graph-toolkit";
 
 ## Props
 
-### `data`
+### `data` - Array
 
 The data to be visualized as an area chart. The data must be an array of objects, and each object must have an `x` and `y` value
 
--   Type: Array
--   Example: `[{ x: 10, y: 20 }, { x: 20, y: 30 }, ...]`
+Example:
 
-### `scaleX` and `scaleY`
+```js
+const data = [
+  { x: 10, y: 20 },
+  { x: 20, y: 30 },
+  // etc...
+];
+```
 
-D3 scale functions for the X and Y axes, respectively.
+### `classPrefix` - string (optional, default value: `"graph"`)
 
--   Type: Function
+The prefix for the CSS class.
 
-### `className` (Optional)
+### `className` - string (optional, default value: `""`)
 
-A custom class name for styling the area chart.
+Additional CSS classes.
 
--   Type: string
--   Default: "graph-area"
+### `scales` - Object
 
-### `fill` (Optional)
+An object containing the x and y scales.
 
-The fill color for the area chart.
+* `x`: The x scale type to use.
+* `y`: The y scale type to use.
 
--   Type: string
--   Default: "blue"
+`scales.x` and `scales.y` can be any D3 scale function, but it's recommended to use the [`getScale` helper function](./getScale.md) for simplicity (and to ensure consistent scales across the multiple components rendered within the graph).
+
+### `curve` - boolean (optional, default value: `false`)
+
+Whether to apply a curve to the area. If `false` (i.e. "no curve") then the area will be rendered as a series of straight lines between data points. If `true` (i.e. "curve") then the area will be rendered as a smooth curve between data points.
+
+> **Note:** this toolkit currently only includes one curve type, a cubic [Catmull–Rom](https://d3js.org/d3-shape/curve#curveCatmullRom) spline. Future versions plan to include [all D3-supported curves](https://d3js.org/d3-shape/curve).
+
+### `label` - string (optional, default value: `""`)
+
+The label for the area.
+
+### `baseline` - number (optional, default value: `0`)
+
+The y-coordinate of the baseline of the area. Useful if you're truncating the y-axis and want to show the area starting from a specific point. Also useful for showing areas above and below a certain threshold.
 
 ## Example Usage
 
+This example assumes you've already setup your `<GraphBase />` component with the necessary [layout](./getLayout.md) and [scales](./getScales.md). See the [`<GraphBase />` documentation](./GraphBase.md) for more details.
+
 ```jsx
-import GraphArea from './GraphArea';
-import { scaleTime, scaleLinear } from 'd3-scale';
+import { GraphArea, GraphBase } from "@tomhazledine/svg-graph-toolkit";
 
-const data = [...]; // Your data array
-const scaleX = scaleTime().domain(/* domain values */);
-const scaleY = scaleLinear().domain(/* domain values */);
+const MyGraph = () => {
+    const myData = [
+        // your data array...
+    ];
 
-const MyAreaChart = () => {
+    // See the `getLayout()` documentation for more details.
+    const myLayout = getLayout();
+    
+    // See the `getScales()` documentation for more details.
+    const myScales = getScales({
+        layout: myLayout,
+        data: myData
+    }); 
+
+    // See the `<GraphBase />` documentation for more details about defining your axes. 
+    const myAxes = {
+        //...
+    };
+
+
     return (
-      <GraphArea
-          data={data}
-      scaleX={scaleX}
-      scaleY={scaleY}
-      fill="lightblue"
-      className="custom-area-chart"
-    />
-  );
+        <GraphBase
+            axes={myAxes}
+            className="my-custom-graph"
+            layout={myLayout}
+        >
+            <GraphArea
+                data={myData}
+                scales={myScales}
+                curve={true}
+                label="My Area"
+                baseline={10}
+            />
+        </GraphBase>
+    );
 };
 
-export default MyAreaChart;
+export default MyGraph;
 ```
-
-This example shows how to integrate `GraphArea` with your data and scale functions to create a simple area chart. Customize the `fill` and `className` props as needed to match your styling requirements.

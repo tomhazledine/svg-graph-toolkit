@@ -59,11 +59,26 @@ React nodes to be rendered within the graph. These can be additional graphical e
 import { GraphBase, getLayout } from "@tomhazledine/svg-graph-toolkit";
 
 const MyGraph = () => {
-    const myData = [...]; // your data array
+    const myData = [
+        { date: 1614556800000, foo: 50 },
+        { date: 1625097600000, foo: 75 },
+        // ...
+    ];
 
     const myLayout = getLayout(800, 600, [10, 20, 30, 40]);
+
+    const axesConfig = {
+        x: {
+            type: "timestamp",
+            key: "date"
+        },
+        y: {
+            key: "foo"
+        }
+    };
     
     const myScales = getScales({
+        axesConfig,
         layout: myLayout,
         data: myData
     }); 
@@ -73,13 +88,13 @@ const MyGraph = () => {
             type: 'timestamp',
             ticks: 10,
             format: d => new Date(d).toLocaleDateString(),
-            scale: myScales
+            scale: myScales.x
         },
         left: {
             type: 'number',
             ticks: 5,
             format: d => `${d} units`,
-            scale: /* a D3 scale function */
+            scale: myScales.y
         }
     };
 

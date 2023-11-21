@@ -21,8 +21,10 @@ Configuration object for the axes, specifying details for both x and y axes.
 * `x`: Object - Configuration for the x-axis.
     * `type`: string - The data type of the axis ('timestamp' or 'number').
     * `key`: string - The key to access the data for the axis.
-    * `scale`: Object (Optional) - Object defining the scale range with min and max values.
-* `y`: Object - Configuration for the y-axis, similar structure to x.
+    * `bounds`: Object (Optional) - Object defining the bounds of the data to be shown.
+        * `min`: number (Optional) - The minimum value of the data to be shown.
+        * `max`: number (Optional) - The maximum value of the data to be shown.
+* `y`: Object - Configuration for the y-axis, similar structure to `x`.
 
 ### layout - Object
 
@@ -44,7 +46,11 @@ An object containing:
 ```jsx
 import { getLayout, getScales } from "@tomhazledine/svg-graph-toolkit";
 
-const data = [...]; // your data array
+const data = [
+    { date: 1614556800000, foo: 50 },
+    { date: 1625097600000, foo: 75 }
+    // More data points...
+];
 
 const layout = getLayout();
 
@@ -55,7 +61,7 @@ const axesConfig = {
     },
     y: {
         type: "number",
-        key: "value",
+        key: "foo",
         scale: {
             min: 0,
             max: 100
