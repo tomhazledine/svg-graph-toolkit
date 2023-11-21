@@ -3,6 +3,17 @@ import { area, curveCatmullRom } from "d3";
 
 import { slugify } from "../utils/general.js";
 
+/**
+ * GraphArea is a functional component that renders an area on a graph using the provided scales and data.
+ *
+ * @param {Array} data - The data to be plotted.
+ * @param {string} classPrefix - The prefix for the CSS class. Default is "graph".
+ * @param {string} className - Additional CSS classes. Default is an empty string.
+ * @param {Object} scales - An object containing the x and y scales.
+ * @param {boolean} curve - Whether to apply a curve to the area. Default is false.
+ * @param {string} label - The label for the area. Default is an empty string.
+ * @param {number} baseline - The y-coordinate of the baseline of the area. Default is 0.
+ */
 const GraphArea = ({
     data,
     classPrefix = "graph",

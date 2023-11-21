@@ -8,5 +8,5 @@ export { default as GraphPath } from "./components/GraphPath.js";
 export { default as GraphPoint } from "./components/GraphPoint.js";
 export { default as GraphPoints } from "./components/GraphPoints.js";
 
-export * from "./utils/general.js";
-export * from "./utils/index.js";
+export { getLayout } from "./utils/getLayout.js";
+export { getScales } from "./utils/getScales.js";
