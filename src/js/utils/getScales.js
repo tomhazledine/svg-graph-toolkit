@@ -97,7 +97,6 @@ const parseAxesConfig = (rawAxesConfig = {}, data) =>
  * @returns {Object} - An object containing the scales for the x and y axes.
  */
 export const getScales = ({ axesConfig, layout, data }) => {
-    console.log({ axesConfig });
     const { x: xConfig, y: yConfig } = parseAxesConfig(axesConfig, data);
 
     const x = selectScaleFunction(xConfig.type)
