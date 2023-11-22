@@ -65,7 +65,11 @@ const MyGraph = () => {
         // ...
     ];
 
-    const myLayout = getLayout(800, 600, [10, 20, 30, 40]);
+    const myLayout = getLayout({
+        width: 800,
+        height: 600,
+        margin: [10, 20, 30, 40]
+    });
 
     const axesConfig = {
         x: {
